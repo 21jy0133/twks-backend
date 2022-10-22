@@ -1,8 +1,16 @@
 const express = require('express')
 const app = express()
+const auth = require('./services/user/auth.js')
+
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-module.exports = app;
+app.use('/auth', auth)
+
+
+
+
+module.exports = app
