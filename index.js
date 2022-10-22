@@ -1,6 +1,6 @@
+const sequelize = require('./db')
 const app = require('./express/app')
-const sequelize = require('./sequelize')
-const { Server } = require("socket.io")
+const startioServer = require("./socketio")
 const http = require('http')
 const PORT = 8000
 
@@ -16,21 +16,19 @@ async function assertDatabaseConnectionOk() {
 }
 
 async function init() {
-	await sequelize.sync()
+
+	await sequelize.sync({ force: false })
+
 	await assertDatabaseConnectionOk()
 
 	console.log(`Starting Sequelize + Express on port ${PORT}...`)
 
 	const server = http.createServer(app)
 
-	const io = new Server(server)
+	startioServer(server)
 
-	io.on('connection', (socket) => {
-		console.log('a user connected')
-	})
-
-	app.listen(PORT, () => {
-		console.log(`Express server started on port ${PORT}.`)
+	server.listen(PORT, () => {
+		console.log('Listening:')
 	})
 }
 

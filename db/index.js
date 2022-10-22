@@ -7,8 +7,11 @@ const { applyRelationsSetup } = require('./extra-setups/relations')
 const sequelize = new Sequelize("postgres://twks_db_user:twks_db_pw@127.0.0.1:5432/twks")
 
 const modelDefiners = [
-	require('./models/user.model')
+	require('./models/User.model'),
+	require('./models/Event.model')
 ]
+
+console.log(modelDefiners)
 
 // We define all models according to their files.
 for (const modelDefiner of modelDefiners) {
@@ -19,4 +22,5 @@ for (const modelDefiner of modelDefiners) {
 applyRelationsSetup(sequelize)
 
 // We export the sequelize connection instance to be used around our app.
+
 module.exports = sequelize

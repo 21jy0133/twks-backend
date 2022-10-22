@@ -3,7 +3,7 @@ const router = express.Router()
 
 const jwt = require('jsonwebtoken')
 
-const { User } = require.main.require('./sequelize/models')
+const db = require.main.require('./db')
 const { body, validationResult } = require('express-validator')
 
 // middleware that is specific to this router
@@ -23,7 +23,6 @@ router.post(
 	body('email').isEmail(),
 	body('password').isLength({ min: 5 }),
 	async (req, res, next) => {
-		console.log(typeof User)
 		const errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
@@ -34,7 +33,7 @@ router.post(
 
 		let existingUser
 		try {
-			existingUser = await User.findOne({ email: email })
+			existingUser = await db.models.User.findOne({ email: email })
 		} catch (error) {
 			return next(error)
 		}
@@ -47,7 +46,7 @@ router.post(
 
 			const accessToken = jwt.sign(
 				{
-					id: existingUser.id,
+					userId: existingUser.id,
 					email: existingUser.email
 				},
 				'process.env.ACCESS_TOKEN_SECRET',

@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize")
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	const user = sequelize.define('user', {
+	const user = sequelize.define('User', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
