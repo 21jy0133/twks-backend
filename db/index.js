@@ -7,8 +7,8 @@ const { applyRelationsSetup } = require('./extra-setups/relations')
 const sequelize = new Sequelize("postgres://twks_db_user:twks_db_pw@127.0.0.1:5432/twks")
 
 const modelDefiners = [
-	require('./models/User.model'),
-	require('./models/Event.model')
+	require('./models/user.model'),
+	require('./models/event.model')
 ]
 
 console.log(modelDefiners)
